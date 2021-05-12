@@ -15,8 +15,6 @@
 - HTTP/2
   - `:authority: developer.mozilla.org`
 
-役割
-
 サーバーで VirtualHost を利用する場合にサーバーは`Host`ヘッダーの値を判断してリクエストを振り分ける。
 
 例えば Nginx で VirtualHost を実現するために以下のような設定を Conf に記述する。  
@@ -50,22 +48,25 @@ server {
 
 ### Content-type
 
-リクエストボディのメディアタイプを指定する
+リクエスト、レスポンスで利用するヘッダーのひとつ。  
+コンテンツのメディアタイプを示す。
 
-MIME
-マルチパート
-1 つのメッセージボディの中に複数のエンティティを含めて送ることができる。主に画像やテキストファイルなどのファイルアップロードの際に使われている。
+メディアのタイプは [MIME(Multipurpose Internet Mail Extensions) Type](https://developer.mozilla.org/ja/docs/Glossary/MIME_type)  
+MIME はメールでテキストや画像を送るために使っている拡張仕様。  
+HTTP もマルチパートに対応しており、1 つのメッセージボディの中に複数のエンティティを含めて送ることができる。主に画像やテキストファイルなどのファイルアップロードの際に使われている。  
+マルチパートのそれぞれのエンティティの区切りとして`boundary`文字列を使う。
 
-レンジリクエスト
-大きなサイズの画像やデータをダウンロードする場合にコネクションが切断されたら、最初からやり直していた。
-中断した箇所からダウンロードを再開できるレジューム機能がある
-これを利用するにはエンティティの範囲を指定してダウンロードを行う必要がある。範囲を指定してダウンロードすることをレンジリクエストと呼ぶ
-
-例:
+MIME Type の例:
 
 - `application/json`
 - `text/html`
+- `text/plain`
 - `multipart/form-data`
+  - HTML フォームを送信した場合
+- `application/x-www-form-urlencoded`
+  - HTML フォームを送信した場合。ただしバイナリデータを扱うには向いてない。
+
+ブラウザによっては MIME を推定し、ヘッダーの値に従わない場合もある。その場合は`X-Content-Type-Options: nosniff`に設定するとその振る舞いを防ぐことができる。
 
 ### User-agent
 
@@ -75,6 +76,9 @@ MIME
 ```
 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36
 ```
+
+参照  
+https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Content-Type
 
 ### accept
 
