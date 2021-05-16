@@ -11,3 +11,5 @@ services:
       - ./docker/meta.html:/usr/share/nginx/html/meta.html
       - ./docker/blank.html:/usr/share/nginx/html/blank.html
       - ./docker/heavy.html:/usr/share/nginx/html/heavy.html
+      - ./docker/basic.html:/usr/share/nginx/html/basic/basic.html
+      - ./docker/.htpasswd:/etc/nginx/.htpasswd

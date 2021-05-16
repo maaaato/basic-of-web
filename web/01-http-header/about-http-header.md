@@ -88,10 +88,10 @@ MIME Type の例:
 
 クライアントを示す識別子
 
-例:
-
 書式  
 `User-Agent: Mozilla/5.0 (<system-information>) <platform> (<platform-details>) <extensions>`
+
+例:
 
 ```
 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36
@@ -128,7 +128,7 @@ Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
 ### Referer
 
 現在リクエストされているページへのリンク先を持った直前のウェブページのアドレスが含まれる。
-Referer ヘッダーにより、サーバーは人々がどこから訪問しに来たかを識別し、分析などに利用することができる。
+Referer ヘッダーにより、サーバーはどこから訪問しに来たかを識別し、分析などに利用することができる。
 
 例
 
@@ -136,7 +136,7 @@ Referer ヘッダーにより、サーバーは人々がどこから訪問しに
 referer: https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Accept
 ```
 
-注意すべき点として、Referer ヘッダーに機密情報を含むウェブページのアドレスが指定された場合にリクエスト先のサーバーに情報が渡ってしまいます。例えばアカウント情報のパスワードリセットリンクなどで用いられるユーザー固有の URL が Referer として渡ってしまった場合、リセットリンクが外部に漏れてしまうことにつながる。（リセットリンクに有効期限があったり、パスワードリセットの場合は既存のパスワードを求められるので不正利用がしにくい）  
+注意すべき点として、Referer ヘッダーに機密情報を含むウェブページのアドレスが指定された場合にリクエスト先のサーバーに情報が渡ってしまう。例えばアカウント情報のパスワードリセットリンクなどで用いられるユーザー固有の URL が Referer として渡ってしまった場合、リセットリンクが外部に漏れてしまうことにつながる。（リセットリンクに有効期限があったり、パスワードリセットの場合は既存のパスワードを求められるので不正利用がしにくい）  
 加えて、Referer の情報を省略するために`Referrer Policyヘッダー`がある。
 同じようにリクエスト先のウェブページに含まれている`img`や`a`タグに指定されている
 `Referrer-Policy: strict-origin-when-cross-origin`
@@ -161,6 +161,102 @@ referer: https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Accept
 
 ### Accept-Encoding
 
+コンテンツのエンコーディングを示すリクエストヘッダー  
+サーバーは選択したエンコーディング方式を`Content-Encoding`レスポンスヘッダーを使用してクライアントに返す。
+
+例:
+
+```
+Accept-Encoding: gzip
+Accept-Encoding: compress
+Accept-Encoding: deflate
+Accept-Encoding: br
+Accept-Encoding: identity
+Accept-Encoding: *
+```
+
+ディレクティブ
+
+```
+gzip
+アルゴリズム：LZ77、ハフマン符号
+フォーマット：Gnu zip
+
+deflate
+アルゴリズム：LZ77、ハフマン符号
+フォーマット：zlib
+
+bzip2
+特徴：deflateやgzipよりも圧縮率が高いが非標準
+アルゴリズム：Burrows-Wheeler transform (BWT)
+フォーマット：bzip2
+
+brotli(br)
+特徴：Googleが開発したアルゴリズム。deflateやgzipよりも高い圧縮率
+アルゴリズム：LZ77、ハフマン符号、2nd order context modeling
+フォーマット:brotli
+
+identity
+圧縮しない
+
+*
+ヘッダーがないデフォルト値。あらゆるエンコーディングフォーマットを指す。すべてのエンコードディングフォーマットに対応しているという意味ではない。
+```
+
+Nginx では`gzip:on;`ディレクティブを設定することでレスポンスボディを gzip 圧縮してレスポンスを返す。
+
+参照  
+[CDN で WEB 高速化 コンテンツ圧縮（gzip）の設定と注意点](https://blog.redbox.ne.jp/cdn-gzip-compress.html)
+
 ### Authorization
 
+ユーザーエージェントの認証情報を伝えるために使用するリクエストヘッダー  
+サーバーからステータスコード`401`を受け取った後のリクエストに`Authorization`ヘッダーフィールドを含める。  
+Basic 認証を設定されている場合は、ブラウザは`401`ステータスコードを受け取った後に認証ダイアログを表示し、ID と Password の入力を求める。入力された場合は base64 エンコーディングをした上で`Authorization: Bacix xxxxxxxxxxxxxxx`といった形式でリクエストを送信する。
+
+Nginx では以下のような設定で Basic 認証を行う。
+
+```
+    location /basic {
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+        auth_basic "Admin area";
+        auth_basic_user_file /etc/nginx/.htpasswd;
+    }
+```
+
+`auth_basic`ディレクティブは任意の文字列を含むことができ、ブラウザによっては Basic 認証のダイアログのメッセージとして表示される。
+
 ### Location
+
+`Location`ヘッダーフィールドはレスポンスの受信者に対して`Request-URI`以外のリソースへアクセスを誘導をする場合に使用するレスポンスヘッダー
+ステータスコードは`3xx`が使用される。  
+リクエスト先のコンテンツが移動した場合など別サイトにリダイレクトさせたい場合に使用する。
+
+## referer について
+
+> Q. a タグに target="\_blank"を設定したところ、先輩エンジニアから「ちゃんと rel=noreferrer を設定した？」と聞かれました。なぜそのような設定が必要なのでしょうか？
+
+`_blank`には以下の問題が含まれている
+
+- `_blank`で開いたリンク先で`window.opener.location = "evil url"`を実行された場合、リンク元がリダイレクトされてしまう。
+- `_blank`で開いたリンクはリンク元と同じプロセスで動作するため、リンク先で重い JS の処理などを実行された場合、リンク元のパフォーマンスが劣化してしまう。
+
+`noreferrer`を設定することで上記の問題の対策が可能。`noreferrer`以外に`noopener`属性も同様な対策が行えるが、古いブラウザでは`noopner`が対応していないため、`noreferrer`を使う。
+
+> Q. rel=noreferrer を設定しなかった場合に起きうる問題を調べて、説明して下さい
+
+先述の問題に加えて、以下の問題が起こりうる。
+
+- リンク元の URL にセンシティブな情報が含まれている場合、リンク先にリファラーとしてセンシティブな情報も含んだ状態で送信してしまう
+
+対策として`noreferrer`を設定するか、rel 属性として`referrerpolicy: origin`にするなど送信する情報を限定的にするなどがある。
+
+> Q. 先輩エンジニアに「同じオリジンの時は referer の情報を全部送って、別オリジンの時は、オリジン情報だけを referer として送信するように、HTTP レスポンスヘッダを追加しておいてもらえる？」と頼まれました。HTTP レスポンスヘッダーには、どんな値を追加する必要があるでしょうか？
+
+`referrer-policy: origin-when-cross-origin`
+
+> 同一オリジン間でリクエストを行う場合はオリジン、パス、クエリ文字列を送信しますが、その他の場合は文書のオリジンのみを送信します。
+
+参照  
+[Referrer-Policy](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Referrer-Policy)
