@@ -1,4 +1,4 @@
-## カスタムヘッダーを送信する
+## Q.1 カスタムヘッダーを送信する
 
 `curl`で実行する場合
 
@@ -145,10 +145,18 @@ Server: gunicorn/19.9.0
 }
 ```
 
-## `json`を送信する
+## Q.2 `json`を送信する
+
+`curl`で実行する場合
 
 ```
 curl -X POST -H "Content-Type: application/json" -d '{"name":"hoge"}' https://httpbin.org/post
+```
+
+もしくはファイルを指定して送信する
+
+```
+curl -X POST -H "Content-Type: application/json" -d @dummy.json https://httpbin.org/post
 ```
 
 ```
@@ -179,7 +187,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"name":"hoge"}' https://ht
 http POST https://httpbin.org/post name=hoge
 ```
 
-## ネストされた`json`の送信
+## Q.3 ネストされた`json`の送信
 
 `curl`の場合
 
@@ -210,7 +218,7 @@ curl -X POST -H "Content-Type: application/json" -d '{userA:{"name":"hoge","age"
 http POST https://httpbin.org/post userA:='{"name": "hoge","age": "29"}'
 ```
 
-## `Content-Type: application/x-www-form-urlencoded`を使ってデータを送信する
+## Q.4 `Content-Type: application/x-www-form-urlencoded`を使ってデータを送信する
 
 `curl`の場合
 
