@@ -1,0 +1,19 @@
+{
+  "name": "03-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-generator": "^4.2.0",
+    "express-validator": "^6.11.1",
+    "jest": "^27.0.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.7"
+  }
+}
