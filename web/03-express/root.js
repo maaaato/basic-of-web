@@ -1,6 +1,14 @@
 exports.Root = (req, res) => {
-    res.json({
-        text: "hello world"
-    })
-    res.status(200)
+    if (req.method == "POST"){
+        if (!req.is('json')) {
+            res.status(400).end()
+        }else{
+            res.status(201).send(req.body)
+        }
+    }else{
+        // Exclude POST
+        res.status(200).json({
+            text: "hello world"
+        })
+    }
 }
