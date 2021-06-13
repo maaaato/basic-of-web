@@ -27,6 +27,15 @@
 
 ## Q4
 
+- Safari
+    - サードパーティクッキーをデフォルトでブロック
+- Chrome
+    - 2022年1月頃にサードパーティクッキーのサポートを終了予定
+- Firefox
+    - サードパーティクッキーをデフォルトでブロック
+
+この3つのブラウザの中ではSafariが最も早くサードパーティクッキーに対する対応をしていた。ついでFirefox, Chromeの順番。
+
 ## Q5
 
 ファーストパーティクッキーになる。ドメインにはポートを含まないため、同一ドメインでポート番号が違う場合でも同じドメインから発行されたクッキーと扱うのでファーストパーティになる。
@@ -42,10 +51,14 @@
 
 > 引用：Full Third-Party cookie Blocking and More | WebKit
 
-https://moltsinc.co.jp/data-strategy/9987/
+- [サードパーティcookieとは？ Apple・Googleの規制による影響を解説](https://moltsinc.co.jp/data-strategy/9987/)
 
-https://kimagureneet.hatenablog.com/entry/2016/02/11/104614
+- [サードパーティクッキーの使い方・使い分けまとめメモ](https://kimagureneet.hatenablog.com/entry/2016/02/11/104614)
 
-https://www.techscore.com/blog/2016/06/24/3rd-party-cookie/
+- [3rd party Cookie いただきます](https://www.techscore.com/blog/2016/06/24/3rd-party-cookie/)
 
-https://qiita.com/bobunderson/items/1874d837de5c2a4c5d0c
+- [Chrome の「サードパーティCookie」とは](https://qiita.com/bobunderson/items/1874d837de5c2a4c5d0c)
+
+- [GDPR(General Data Protection Regulation)](https://www.ppc.go.jp/enforcement/infoprovision/laws/GDPR/)
+
+- ITP（Intelligent Tracking Prevention）トラッキング防止機能
