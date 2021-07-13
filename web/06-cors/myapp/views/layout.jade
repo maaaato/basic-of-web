@@ -2,6 +2,72 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
+    link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css')
+    link(rel='stylesheet' href='https://getbootstrap.jp/docs/5.0/examples/sign-in/signin.css')
+    script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js')
+    style(type='text/css').
+      .pointer {cursor:pointer;};
+    script.
+      'use strict';
+      const apiendpoint = 'https://89e3de4d6488.ngrok.io'
+      const $ = (id) => document.getElementById(id);
+      const xhr = new XMLHttpRequest();
+
+      function update_profile() {
+        const fd = new FormData($('edit-form'));
+        xhr.open('POST', apiendpoint + '/upload');
+        xhr.send(fd);
+      };
+
+      xhr.onreadystatechange = function() {
+            switch ( xhr.readyState ) {
+                case 0:
+                    // 未初期化状態.
+                    console.log( 'uninitialized!' );
+                    break;
+                case 1: // データ送信中.
+                    console.log( 'loading...' );
+                    break;
+                case 2: // 応答待ち.
+                    console.log( 'loaded.' );
+                    break;
+                case 3: // データ受信中.
+                    console.log( 'interactive... '+xhr.responseText.length+' bytes.' );
+                    break;
+                case 4: // データ受信完了.
+                    if( xhr.status == 200 || xhr.status == 304 ) {
+                        let profileArea = document.getElementById('profile-area');
+                        let data = JSON.parse(xhr.responseText);
+                        console.log( 'COMPLETE! :'+data.path );
+                        const i = `<img src='${ apiendpoint }/${ data.path }'></img>`
+                        profileArea.innerHTML += i;
+                    } else {
+                        console.log( 'Failed. HttpStatus: '+xhr.statusText );
+                        console.log(data);
+                    }
+                    break;
+            }
+        };
+      window.addEventListener('load', () => {
+        $('profile-area').addEventListener('click', (evt) => {
+          const editArea = document.getElementById('edit-area');
+          const name = document.getElementById('profile-name').textContent;
+          const email = document.getElementById('profile-email').textContent;
+          const f = `<form id='edit-form'>
+              <label class='visually-hidden'> name</label>
+              <input class='form-control' type='text' id='inputName' value='${ name }')</input>
+              <label class='visually-hidden'> mail address</label>
+              <input class='form-control' type='email' id='inputEmail' value='${ email }'></input>
+              <label> Please choose your picture
+              <input type='file' name='profile' style='display:none;'></input>
+              </label>
+            </form>
+            <div>
+              <button class='btn btn-lg btn-primary' type='button' onclick='update_profile()'> Save </button>
+            </div>
+          `
+          editArea.innerHTML += f;
+        });
+      });
+  body.text-center
     block content

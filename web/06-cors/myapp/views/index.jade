@@ -1,5 +1,9 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  main.form-signin
+    h1= title
+    div#profile-area
+      div#profile-name.pointer= name
+      div#profile-email.pointer= email
+    div#edit-area
