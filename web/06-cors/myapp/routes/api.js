@@ -16,21 +16,26 @@ const storage = multer.diskStorage({
       default:
         break
     }
-    cb(null, file.fieldname + '-' + uniqueSuffix + '.' + extension)
+    cb(null, 'profile' + '.' + extension)
   }
 });
 const upload = multer({storage: storage});
 
 const fs = require('fs');
 
+// Add Header
+router.use('/upload', function(req, res, next){
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  next();
+});
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.status(200).json({});
 });
 
-router.post('/upload', upload.single('profile'), function(req, res, next) {
+router.post('/upload', upload.single('profilePic'), function(req, res, next) {
   try {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.json({
       "path": req.file.path
     });
