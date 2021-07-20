@@ -21,10 +21,8 @@ const storage = multer.diskStorage({
 });
 const upload = multer({storage: storage});
 
-const fs = require('fs');
-
 // Add Header
-router.use('/upload', function(req, res, next){
+router.use('/update', function(req, res, next){
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
   next();
 });
@@ -34,10 +32,13 @@ router.get('/', function(req, res, next) {
   res.status(200).json({});
 });
 
-router.post('/upload', upload.single('profilePic'), function(req, res, next) {
+router.post('/update', upload.single('profilePic'), function(req, res, next) {
+  console.log(req.file)
   try {
     res.json({
-      "path": req.file.path
+      "imagePath": (req.file) ? req.file.path : "",
+      "name": (req.body.name) ? req.body.name : "",
+      "email": (req.body.email) ? req.body.email : ""
     });
   } catch(e) {
     console.log(e);

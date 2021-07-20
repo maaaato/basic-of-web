@@ -1,10 +1,17 @@
 extends layout
 
 block content
-  main.form-signin
-    h1= title
-    div#profile-area
-      div#profile-circle
-      div#profile-name.pointer= name
-      div#profile-email.pointer= email
-    div#edit-area
+  div
+    div#profile-area(style={'max-width':'72rem', 'margin-left': 'auto', 'margin-right': 'auto'})
+      h2= title
+      div(style={'width':'100%'})
+        div(style={'display': 'inline-flex'})
+          label
+            div#profile-circle.pointer(style='flex:none;')
+            input#profile-pic(type='file' name='profile-pic' style={'display':'none'} accept='image/jpeg')
+          div(style={'margin-right': '2rem', 'margin-left': '1rem'})
+            div(style={'display':'flex'})
+              div#profile-name.pointer= name
+            div(style={'display': 'flex'})
+              div#profile-email.pointer(style={'display':'flex'})= email
+        div#edit-area
