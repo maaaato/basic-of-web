@@ -2,16 +2,16 @@ extends layout
 
 block content
   div
-    div#profile-area(style={'max-width':'72rem', 'margin-left': 'auto', 'margin-right': 'auto'})
+    div#profile-area
       h2= title
       div(style={'width':'100%'})
-        div(style={'display': 'inline-flex'})
+        div.inline-flex
           label
-            div#profile-circle.pointer(style='flex:none;')
+            div#profile-circle.pointer.flex-none
             input#profile-pic(type='file' name='profile-pic' style={'display':'none'} accept='image/jpeg')
-          div(style={'margin-right': '2rem', 'margin-left': '1rem'})
-            div(style={'display':'flex'})
+          div.ml1.mr2
+            div.flex
               div#profile-name.pointer= name
-            div(style={'display': 'flex'})
-              div#profile-email.pointer(style={'display':'flex'})= email
+            div.flex
+              div#profile-email.pointer.flex= email
         div#edit-area
