@@ -45,11 +45,13 @@ router.use('/', function(req, res, next){
   next();
 });
 
+// Delete History from Cache
 function deleteHistory(v, id) {
   v.history.delete(id)
   cache.set(key, v)
 }
 
+// Set Cache each key
 function setCache(r) {
   lruvalue.history.set(
     uuid.v4(),
@@ -78,9 +80,9 @@ router.delete('/history/:uuid', function(req, res, next) {
     v = cache.get(key);
     deleteHistory(v, req.params.uuid);
     setCache('history delete: success!')
-    res.status(204).json([...cache.get(key).history]);
+    res.status(204).end();
   } catch(e) {
-    res.status(500);
+    res.status(500).end();
   }
 });
 

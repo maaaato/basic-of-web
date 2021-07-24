@@ -1,12 +1,12 @@
 'use strict';
-const apiEndpoint = 'https://396bca642f2f.ngrok.io'
+const apiEndpoint = 'https://ae02bbd41c02.ngrok.io'
 const $ = (id) => document.getElementById(id);
-const uxhr = new XMLHttpRequest();
-const dxhr = new XMLHttpRequest();
+const uxhr = new XMLHttpRequest(); // for profile
+const hxhr = new XMLHttpRequest(); // for history
 
 function deleteHistory(obj) {
-  dxhr.open('DELETE', apiEndpoint + '/history/' + obj.id);
-  dxhr.send();
+  hxhr.open('DELETE', apiEndpoint + '/history/' + obj.id);
+  hxhr.send();
   document.getElementById(obj.id).remove();
 };
 
@@ -26,8 +26,8 @@ function updateProfilePic() {
 };
 
 function fetchHistory() {
-  dxhr.open('GET', apiEndpoint + '/history');
-  dxhr.send();
+  hxhr.open('GET', apiEndpoint + '/history');
+  hxhr.send();
 };
 
 function removeForm() {
@@ -40,71 +40,6 @@ function removeForm() {
 function updateBackgroundImage(id, url) {
   let target = document.getElementById(id);
   target.style.backgroundImage = 'url(' + url + ')';
-};
-
-uxhr.onreadystatechange = function() {
-      switch ( uxhr.readyState ) {
-          case 0:
-              // 未初期化状態.
-              console.log( 'uninitialized!' );
-              break;
-          case 1: // データ送信中.
-              console.log( 'loading...' );
-              break;
-          case 2: // 応答待ち.
-              console.log( 'loaded.' );
-              break;
-          case 3: // データ受信中.
-              console.log( 'interactive... '+uxhr.responseText.length+' bytes.' );
-              break;
-          case 4: // データ受信完了.
-              if( uxhr.status == 200 || uxhr.status == 304 ) {
-                  if (uxhr.responseText){
-                    let data = JSON.parse(uxhr.responseText);
-                    console.log( 'COMPLETE! :'+data);
-                    refreshProfile(data);
-                    fetchHistory();
-                  }
-              } else {
-                  console.log( 'Failed. HttpStatus: '+uxhr.statusText );
-                  console.log(data);
-              }
-              break;
-      }
-  };
-
-dxhr.onreadystatechange = function() {
-    switch ( dxhr.readyState ) {
-        case 0:
-            // 未初期化状態.
-            console.log( 'uninitialized!' );
-            break;
-        case 1: // データ送信中.
-            console.log( 'loading...' );
-            break;
-        case 2: // 応答待ち.
-            console.log( 'loaded.' );
-            break;
-        case 3: // データ受信中.
-            console.log( 'interactive... '+dxhr.responseText.length+' bytes.' );
-            break;
-        case 4: // データ受信完了.
-            if( dxhr.status == 200 || dxhr.status == 304 ) {
-                if (dxhr.responseText){
-                    let data = JSON.parse(dxhr.responseText);
-                    console.log( 'COMPLETE!'+data.history);
-                    refreshHistory(data);
-                }
-            } if( dxhr.status == 204) {
-                if (dxhr.responseText){
-                    let data = JSON.parse(dxhr.responseText);
-                    console.log( 'COMPLETE!'+data.history);
-                }
-            } else {
-                console.log( 'Failed. HttpStatus: '+dxhr.statusText );
-            }
-            break;
-    }
 };
 
 function refreshProfile(data){
@@ -128,10 +63,8 @@ function refreshHistory(data) {
     let e = "";
     if (data){
         data.forEach(function(v) {
-            console.log(v);
-
             e += `
-            <div id='${v[0]}' onclick='deleteHistory(this)'>${v[1].date}: ${v[1].result}</div>
+            <div id='${v[0]}' class='pointer' onclick='deleteHistory(this)'>${v[1].date}: ${v[1].result}</div>
             `
         })
         historyArea.innerHTML += e;
@@ -169,6 +102,70 @@ function editEmail(){
       </div>
     `
     editArea.innerHTML += f;
+};
+
+uxhr.onreadystatechange = function() {
+      switch ( uxhr.readyState ) {
+          case 0:
+              // 未初期化状態.
+              console.log( 'uninitialized!' );
+              break;
+          case 1: // データ送信中.
+              console.log( 'loading...' );
+              break;
+          case 2: // 応答待ち.
+              console.log( 'loaded.' );
+              break;
+          case 3: // データ受信中.
+              console.log( 'interactive... '+uxhr.responseText.length+' bytes.' );
+              break;
+          case 4: // データ受信完了.
+              if( uxhr.status == 200 || uxhr.status == 304 ) {
+                  if (uxhr.responseText){
+                    let data = JSON.parse(uxhr.responseText);
+                    console.log( 'COMPLETE!');
+                    refreshProfile(data);
+                    fetchHistory();
+                  }
+              } else {
+                  console.log( 'Failed. HttpStatus: '+uxhr.statusText );
+              }
+              break;
+      }
+  };
+
+hxhr.onreadystatechange = function() {
+    switch ( hxhr.readyState ) {
+        case 0:
+            // 未初期化状態.
+            console.log( 'uninitialized!' );
+            break;
+        case 1: // データ送信中.
+            console.log( 'loading...' );
+            break;
+        case 2: // 応答待ち.
+            console.log( 'loaded.' );
+            break;
+        case 3: // データ受信中.
+            console.log( 'interactive... '+hxhr.responseText.length+' bytes.' );
+            break;
+        case 4: // データ受信完了.
+            if( hxhr.status == 200 || hxhr.status == 304 ) {
+                if (hxhr.responseText){
+                    let data = JSON.parse(hxhr.responseText);
+                    console.log( 'COMPLETE!');
+                    refreshHistory(data);
+                }
+            } else if( hxhr.status == 204) {
+                if (hxhr.responseText){
+                    let data = JSON.parse(hxhr.responseText);
+                    console.log( 'COMPLETE!');
+                }
+            } else {
+                console.log( 'Failed. HttpStatus: '+hxhr.statusText );
+            }
+            break;
+    }
 };
 
 window.addEventListener('load', () => {

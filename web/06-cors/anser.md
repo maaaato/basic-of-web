@@ -57,6 +57,18 @@ CORSエラーとなり、ブラウザ側でコンテンツとして使用でき�
 ## Q2-1. Quiz
 
 
+## Q3
+以下はデモサイトでXHRのリクエストをdevtoolで観察した様子である。  
+`simple request`, `preflight request`それぞれの発生した様子について補足する。
+
+![](myapp/demo.gif)
+
+- `simple request`である`GET`メソッドを実行した場合
+    - `preflight request`が実行されていないことがコンソールのリストからわかる
+- `preflight request`である`DELETE`メソッドを実行した場合
+    - `preflight request`が実行されたことがコンソールのリストからわかる
+
+
 ### メモ
 XMLHttpRequest
 IE5で独自実装された
