@@ -1,4 +1,3 @@
-# EGROK_DOMAIN := $(shell curl http://localhost:4040/api/tunnels | jq -r ".tunnels[0].public_url" | sed -E "s/(http|https):\/\/([^/]+).*/\2/")
 
 ngrok-bg-up:
 	ngrok http 8080 > /dev/null &
