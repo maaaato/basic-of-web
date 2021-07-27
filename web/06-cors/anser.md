@@ -85,20 +85,22 @@ MSXMLライブラリの一部としてリリースされた。XMLHTTPという�
 
 - オプトイン/オプトアウト
 >「オプトイン」とは、ユーザーが、企業からの情報の受け取りや自らに関する情報の利用に関して、あらかじめ許可を与えること。反対に「オプトアウト」は、事前確認なく送られてくる広告やメールに対して、ユーザーが不要の場合のみ情報の受け取りや個人情報の利用を拒否することです。
+
 https://drm.ricoh.jp/lab/glossary/g00056.html
 
 - CORS を過信しない。
+
 https://medium.com/@yuhattor/cors-%E3%82%92%E9%81%8E%E4%BF%A1%E3%81%97%E3%81%99%E3%81%8E%E3%81%AA%E3%81%84-818f63b9d83d
 
 #### CSS
-- background-position
+- background-position  
 背景画像の初期位置を設定する
 
-- rem
+- rem  
 HTMLタグの文字サイズを基準とした相対値で文字サイズを規定する
 https://www.pc-koubou.jp/magazine/23912#section05
 
-- display:flex inline-flex
+- display:flex inline-flex  
     - flex: 要素に定義するとその子要素が横または縦に並ぶ
     - inline-flex: その子要素が並ぶのはflexと同じだが、inline-flexの要素同士を横並びにできる
 https://mam-mam.net/javascript/css_display_flex.html
