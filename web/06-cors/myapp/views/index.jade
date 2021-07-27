@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  div
+    div#profile-area
+      h2= title
+      div(style={'width':'100%'})
+        div.inline-flex
+          label
+            div#profile-circle.pointer.flex-none
+            input#profile-pic(type='file' name='profile-pic' style={'display':'none'} accept='image/jpeg')
+          div.ml1.mr2
+            div.flex
+              div#profile-name.pointer= name
+            div.flex
+              div#profile-email.pointer.flex= email
+        div#edit-area
+        h3 History
+        div#history-area
