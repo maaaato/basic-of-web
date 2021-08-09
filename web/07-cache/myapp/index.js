@@ -7,15 +7,6 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const app = express();
 
-app.use('/uploads', express.static('uploads',{
-  // lastModified: false,
-  // etag: false,
-  // maxAge: 60000
-  setHeaders: function(res, path) {
-    res.setHeader('Expires', new Date(Date.now() + 300000).toUTCString());
-  }
-}));
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -26,6 +17,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static('uploads',{
+  lastModified: false,
+  etag: false,
+  // maxAge: 60000,
+  setHeaders: function(res, path) {
+    // res.setHeader('Expires', new Date(Date.now() + 300000).toUTCString());
+    res.setHeader('Cache-Control', 'private,max-age:60000');
+  }
+}));
 
 app.use('/', indexRouter);
 
