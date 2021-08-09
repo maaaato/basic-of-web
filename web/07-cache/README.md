@@ -19,6 +19,7 @@
   - [メルカリ](#メルカリ)
   - [プラハチャレンジ](#プラハチャレンジ)
   - [はてなブログ](#はてなブログ)
+- [キャッシュの有効無効](#キャッシュの有効無効)
 - [メモ](#メモ)
 
 ## キャッシュとは？
@@ -197,6 +198,14 @@ Expires: Tue, 10 Aug 2021 05:37:26 GMT
 ```
 
 ![](hatena.png)
+
+## キャッシュの有効無効
+キャッシュを有効にした場合
+![](use-cache.png)
+
+キャッシュを無効にした場合
+![](no-cache.png)
+
 ## メモ
 [HTTPヘッダチューニング Etag・Last-Modified](https://blog.redbox.ne.jp/http-header-tuning.html)
 
@@ -207,5 +216,9 @@ Expires: Tue, 10 Aug 2021 05:37:26 GMT
 - LRU(Least Recently Used)キャッシュ
   - 直近に参照した時刻が一番古いものを捨てる。キャッシュにデータを追加したり、データを見たり、更新したりすること全般を参照という。
 - ZoneApex
+  - サブドメインを含まないドメイン(e.g. `example.com`)
 - CNAME Flatting機能
+  - Zone ApexはCNAMEを設定できない([RFC1912](https://tools.ietf.org/html/rfc1912))
+    - [URLに「WWW」が付かないサイトを作る場合の注意点](https://www.mki.co.jp/lp/cloudflare/column_20191206.html)
+  - Route53のAliaceレコードを使い回避できる機能
 - [CDN切り替え作業における、Web版メルカリの個人情報流出の原因につきまして](https://engineering.mercari.com/blog/entry/2017-06-22-204500/)

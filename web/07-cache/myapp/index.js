@@ -16,15 +16,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static('uploads',{
+app.use('/public', express.static(path.join(__dirname, 'public'),{
   lastModified: false,
   etag: false,
-  // maxAge: 60000,
   setHeaders: function(res, path) {
-    // res.setHeader('Expires', new Date(Date.now() + 300000).toUTCString());
-    res.setHeader('Cache-Control', 'private,max-age:60000');
+    res.setHeader('Cache-Control', 'no-store');
   }
+}));
+
+app.use('/uploads', express.static('uploads',{
+  lastModified: false,
+  etag: true,
+  // maxAge: 60000,
+  // setHeaders: function(res, path) {
+  //   // res.setHeader('Expires', new Date(Date.now() + 300000).toUTCString());
+  //   res.setHeader('Cache-Control', 'private,max-age:60000');
+  // }
 }));
 
 app.use('/', indexRouter);
