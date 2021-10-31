@@ -1,4 +1,4 @@
-import { writeDataInLocal, fetchURL } from "../quiz_function";
+import { writeDataInLocal, fetchURL, newConfig } from "../quiz_function";
 
 describe("writeDataInLocal test", () => {
     test('Check normal', () => {
@@ -21,5 +21,14 @@ describe("fetchURL test", () => {
         return fetchURL("https://httpbin.org/headers").then(data =>{
             expect(data).toEqual(expected);
         });
+    });
+});
+
+describe("Config test", () => {
+    test('Check normal', () => {
+        const config = newConfig("quiz.yaml");
+        expect(config.Cluster).toBe('example');
+        expect(config.Service).toBe('example-api');
+        expect(config.TaskCount).toBe(2);
     });
 });

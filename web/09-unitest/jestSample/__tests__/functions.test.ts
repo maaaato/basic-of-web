@@ -62,7 +62,3 @@ describe('getFirstNameThrowIfLong test', () => {
         expect(fn.getFirstNameThrowIfLong(3, NameApiMock())).rejects.toStrictEqual(new Error("first_name too long"));
     });
 })
-
-describe('load config test', () => {
-    
-})
