@@ -1,4 +1,3 @@
-import { doesNotMatch } from "assert";
 import { writeDataInLocal, fetchURL } from "../quiz_function";
 
 describe("writeDataInLocal test", () => {
