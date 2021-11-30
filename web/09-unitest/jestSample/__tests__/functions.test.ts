@@ -3,7 +3,7 @@ const fn = require('../functions.ts');
 
 describe("sumOfArray test", () => {
     test('Check normal', () => {
-        expect(fn.sumOfArray([1,2])).toBe(3);
+        expect(fn.sumOfArray([1, 2])).toBe(3);
         expect(fn.sumOfArray([1])).toBe(1);
         expect(fn.sumOfArray([])).toBe(0);
     });
@@ -11,7 +11,7 @@ describe("sumOfArray test", () => {
 
 describe("asyncSumOfArray test", () => {
     test('Check normal', () => {
-        expect(fn.asyncSumOfArray([1,2])).resolves.toBe(3);
+        expect(fn.asyncSumOfArray([1, 2])).resolves.toBe(3);
         expect(fn.asyncSumOfArray([1])).resolves.toBe(1);
         expect(fn.asyncSumOfArray([])).resolves.toBe(0);
     });
@@ -24,37 +24,37 @@ describe("asyncSumOfArray test", () => {
 describe('asyncSumOfArraySometimesZero test', () => {
     test('Check normal', () => {
         const dbMock = jest
-        .fn()
-        .mockImplementationOnce(() => {
-            return {
-                save: () :void => {}
-            };
-        })
-        .mockImplementationOnce(() => {
-            return {
-                save: () :void => {
-                    throw new Error("fail");
-                }
-            };
-        });
+            .fn()
+            .mockImplementationOnce(() => {
+                return {
+                    save: (): void => { }
+                };
+            })
+            .mockImplementationOnce(() => {
+                return {
+                    save: (): void => {
+                        throw new Error("fail");
+                    }
+                };
+            });
 
-        expect(fn.asyncSumOfArraySometimesZero([0,1], dbMock())).resolves.toBe(1);
-        expect(fn.asyncSumOfArraySometimesZero([0,1], dbMock())).resolves.toBe(0);
+        expect(fn.asyncSumOfArraySometimesZero([0, 1], dbMock())).resolves.toBe(1);
+        expect(fn.asyncSumOfArraySometimesZero([0, 1], dbMock())).resolves.toBe(0);
     });
 });
 
 describe('getFirstNameThrowIfLong test', () => {
     const NameApiMock = jest
-    // mockのデフォルトとして以下のmockを設定することで何度呼ばれてもデフォルト値が返る
-    .fn(() => {
-        return {
-            getFirstName () :Promise<string>{
-                return new Promise((resolve) => {
+        // mockのデフォルトとして以下のmockを設定することで何度呼ばれてもデフォルト値が返る
+        .fn(() => {
+            return {
+                getFirstName(): Promise<string> {
+                    return new Promise((resolve) => {
                         resolve("ABCD");
                     });
-            }
-        };
-    });
+                }
+            };
+        });
     test('Check normal', () => {
         expect(fn.getFirstNameThrowIfLong(5, NameApiMock())).resolves.toEqual("ABCD");
     });

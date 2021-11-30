@@ -1,22 +1,18 @@
-import * as fn from './util/quiz';
-import {XMLHttpRequest} from "xmlhttprequest-ts";
+import * as fn from "./util/quiz";
+import { XMLHttpRequest } from "xmlhttprequest-ts";
 
 // Quiz.1
-export const writeDataInLocal = (
-    data: string
-): Boolean => {
-    try {
-        fn.FileManager.saveInLocal(data);
-        return true;
-    } catch (error) {
-        return false;
-    }
-}
+export const writeDataInLocal = (data: string): Boolean => {
+  try {
+    fn.FileManager.saveInLocal(data);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
 
 // Quiz.2
-export const fetchURL = (
-  url: string
-  ): Promise<string> => {
+export const fetchURL = (url: string): Promise<string> => {
   return new Promise((resolve, reject): void => {
     const req = new XMLHttpRequest();
     req.onloadend = () => {
@@ -32,13 +28,11 @@ export const fetchURL = (
     req.open("GET", url, true);
     req.send(null);
   });
-}
+};
 
 // Quiz.3
-export const newConfig = (
-    path: string
-): fn.Config => {
-    const config = new fn.Config;
-    config.load(path);
-    return config;
-}
+export const newConfig = (path: string): fn.Config => {
+  const config = new fn.Config();
+  config.load(path);
+  return config;
+};
