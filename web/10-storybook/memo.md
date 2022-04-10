@@ -1,0 +1,24 @@
+- Propsとは？
+  - コンポーネントに渡す引数のようなもの
+- stateとは？
+  - コンポーネントの状態を表す値
+    - webアプリの画面の状態には様々なものがある
+      - エラーがあるか
+      - モーダルウィンドウが開いているか
+      - ボタンを押せるか
+      - テキストボックスに何を入力したか
+  - これらの状態をすべてStateとして管理し、イベント実行時などに更新処理を行うことで動的アプリケーションを実現していく
+- handleClickとは？
+- ReactDomとは？
+ - renderとは？
+   - ReactDomの関数。第一引数にrender対象、第二引数にrender箇所を設定
+   - Reactでは関数名をHTMLのようにタグで囲むことによってコンポーネントとして扱うことができる。
+   - renderで返却するタグは1つのタグで囲われている必要があるので、`<div>`で囲うか、`Fragment`で囲むか`<>`空タグで囲う方法がある。
+     - `import { Fragment } from "react";`
+- クラスコンポーネントと関数コンポーネントとは？
+  - 以前のReactではClassで定義されたクラスコンポーネントが使われていたが、いまは関数コンポーネントが主流
+- 関数コンポーネントとは？
+
+FYI
+- [React:関数コンポーネントとクラスコンポーネントの違い](https://www.twilio.com/blog/react-choose-functional-components-jp)
+- [codesandbox.io](https://codesandbox.io/s/hardcore-gates-yruz9f)
