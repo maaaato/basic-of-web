@@ -5,6 +5,13 @@ import { Board } from '../components/Board'
 export default {
   title: 'Add/Board',
   component: Board,
+  decorators: [
+    (Story) => (
+      <div style={{ margin: '3em'}}>
+        <Story />
+        </div>
+    )
+  ]
 };
 
 const Template = (args) => <Board {...args} />;
