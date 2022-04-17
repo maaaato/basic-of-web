@@ -2,3 +2,4 @@ node_modules
 uploads
 images
 .vscode
+.DS_Store
