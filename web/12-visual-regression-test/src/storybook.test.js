@@ -6,19 +6,20 @@ import initStoryshots from "@storybook/addon-storyshots";
 import { imageSnapshot } from "@storybook/addon-storyshots-puppeteer";
 
 // Function to customize the snapshot location
-// const getMatchOptions = ({ context: { fileName } }) => {
-//   // Generates a custom path based on the file name and the custom directory.
-//   const snapshotPath = path.join(
-//     path.dirname(fileName),
-//     "/Users/maaaato/go/src/github.com/maaaato/basic-of-web/web/10-storybook/my-app/src/__snapshots__/"
-//   );
-//   return { customSnapshotsDir: snapshotPath };
-// };
+const getMatchOptions = ({ context: { id, fileName } }) => {
+  // Generates a custom path based on the file name and the custom directory.
+  const snapshotPath = path.join(path.dirname(fileName), "__image_snapshots__");
+
+  return {
+    customSnapshotsDir: snapshotPath,
+    customSnapshotIdentifier: id,
+  };
+};
 
 initStoryshots({
   // your own configuration
   test: imageSnapshot({
     // invoke the function above here
-    // getMatchOptions,
+    getMatchOptions,
   }),
 });
