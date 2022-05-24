@@ -28,10 +28,10 @@ const drawLines = [
     squares: ["X","○",null,null,null,null,null,null,null]
   },
   {
-    squares: ["X","○","X",,null,null,null,null,null,null]
+    squares: ["X","○","X",null,null,null,null,null,null]
   },
   {
-    squares: ["X","○","X", null, null, "X",,null,null,null,null]
+    squares: ["X","○","X", null, null, "X",null,null,null]
   },
   {
     squares: ["X","○","X", null, null, "X", null, null, "○"]
