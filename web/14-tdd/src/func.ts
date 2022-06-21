@@ -8,18 +8,27 @@ const getArgs = (process: any): number[] => {
   return args;
 };
 
+const threshold: number = 31;
+
+const isOverArgs = (len: number, threshold: number): boolean => {
+  if (len >= threshold) {
+    return true;
+  }
+  return false;
+};
+
 export const multiply = (...args: number[]) => {
-  if (args.length >= 31) {
+  if (isOverArgs(args.length, threshold)) {
     throw new Error("too many args");
   }
 
   let value: number = args.reduce((acc: number, current: number): number => {
-    console.log(typeof current);
-    if (isNaN(current)) {
+    let v: number = Number(current);
+    if (Number.isNaN(v)) {
       throw new Error("include string. this args only number");
     }
-    return acc * current;
-  }, 1);
+    return Number(acc) * v;
+  });
 
   if (value >= 1000) {
     return "big big number";
@@ -28,26 +37,81 @@ export const multiply = (...args: number[]) => {
   return value;
 };
 
-export const add = () => {
-  console.debug("aaa");
+export const add = (...args: number[]) => {
+  if (isOverArgs(args.length, threshold)) {
+    throw new Error("too many args");
+  }
+
+  let value: number = args.reduce((acc: number, current: number): number => {
+    let v: number = Number(current);
+    if (Number.isNaN(v)) {
+      throw new Error("include string. this args only number");
+    }
+    return Number(acc) + v;
+  });
+
+  console.log(value);
+  if (value >= 1000) {
+    return "too big";
+  }
+
+  return value;
 };
 
-// export const subtract = (hoge: number) => {
-//   console.debug(hoge);
-// };
+export const subtract = (...args: number[]) => {
+  if (isOverArgs(args.length, threshold)) {
+    throw new Error("too many args");
+  }
 
-export const divide = () => {
-  console.debug("aaa");
+  let value: number = args.reduce((acc: number, current: number): number => {
+    let v: number = Number(current);
+    if (Number.isNaN(v)) {
+      throw new Error("include string. this args only number");
+    }
+    return Number(acc) - v;
+  });
+
+  if (value < 0) {
+    return "negative number";
+  }
+
+  return value;
 };
 
+export const divide = (...args: number[]) => {
+  if (isOverArgs(args.length, threshold)) {
+    throw new Error("too many args");
+  }
+
+  let value: number = args.reduce((acc: number, current: number): number => {
+    let v: number = Number(current);
+    if (Number.isNaN(v)) {
+      throw new Error("include string. this args only number");
+    }
+    return Number(acc) / v;
+  });
+
+  return value;
+};
+
+let v;
 switch (process.argv[2]) {
   case "multiply":
-    let v = getArgs(process);
-    console.log(v);
+    v = getArgs(process);
     console.log(multiply(...v));
     break;
+  case "add":
+    v = getArgs(process);
+    console.log(add(...v));
+    break;
   case "subtract":
-  // subtract(process.argv[3]);
+    v = getArgs(process);
+    console.log(subtract(...v));
+    break;
+  case "divide":
+    v = getArgs(process);
+    console.log(divide(...v));
+    break;
   default:
     break;
 }
